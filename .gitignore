@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment Variables
+.env
+
+# Build Output
+frontend/build/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+
+# IDE Files
+.vscode/
+.idea/
