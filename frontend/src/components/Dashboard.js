@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   const [data, setData] = useState({
@@ -7,6 +8,11 @@ function Dashboard() {
     vaccinatedStudents: 0,
     upcomingDrives: [],
   });
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
 
   useEffect(() => {
     // Fetch aggregate data from the backend
@@ -21,6 +27,13 @@ function Dashboard() {
 
   return (
     <div>
+      <nav>
+        <ul>
+          <li><Link to="/students">Add/Manage Student Details</Link></li>
+          <li><Link to="/generate-reports">Generate Reports</Link></li>
+          <li><button onClick={handleLogout}>Logout</button></li>
+        </ul>
+      </nav>
       <h1>Dashboard</h1>
       <p>Total Students: {data.totalStudents}</p>
       <p>Vaccinated Students: {data.vaccinatedStudents}</p>

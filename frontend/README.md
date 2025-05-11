@@ -5,10 +5,10 @@ The School Vaccination Portal is a full-stack web application designed to manage
 
 ## Features
 - **Authentication**: Simulated login for school coordinators with hardcoded credentials.
-- **Dashboard**: Displays key metrics such as total students, vaccinated students, and upcoming vaccination drives.
-- **Student Management**: Add, edit, and view student details. Bulk upload functionality is also supported.
-- **Vaccination Drive Management**: Create and manage vaccination drives with validation to prevent scheduling conflicts.
-- **Integration**: Frontend (React) and backend (Node.js/Express) communicate seamlessly via REST APIs.
+- **Dashboard**: Displays key metrics such as total students, vaccinated students, and upcoming vaccination drives. Includes a logout button.
+- **Student Management**: Add, edit, and view student details. Bulk upload functionality is supported via CSV.
+- **Vaccination Drive Management**: Create and manage vaccination drives with validation to prevent scheduling conflicts. Edit functionality is available for upcoming drives, while completed drives are locked.
+- **Generate Reports**: View vaccination reports with filtering, pagination, and CSV download functionality.
 
 ## Tech Stack
 - **Frontend**: React.js
@@ -73,10 +73,15 @@ The School Vaccination Portal is a full-stack web application designed to manage
 ### Students
 - **GET** `/api/students`: Fetch all students.
 - **POST** `/api/students`: Add a new student.
+- **POST** `/api/students/bulk-upload`: Bulk upload students via CSV.
 
 ### Vaccination Drives
 - **GET** `/api/vaccination-drives`: Fetch all vaccination drives.
 - **POST** `/api/vaccination-drives`: Create a new vaccination drive.
+- **PUT** `/api/vaccination-drives/:id`: Edit an existing vaccination drive.
+
+### Reports
+- **GET** `/api/reports`: Fetch vaccination reports.
 
 ## Folder Structure
 ```
@@ -105,16 +110,18 @@ frontend/
       Login.js
       StudentManagement.js
       VaccinationDriveManagement.js
+      GenerateReports.js
 ```
 
 ## Demonstration
 - Ensure both the backend and frontend servers are running.
 - Use the application to manage students and vaccination drives.
+- Test the login, logout, and report generation functionalities.
 
 ## Future Enhancements
 - Add role-based access control.
-- Implement bulk upload for student data.
-- Add export functionality for reports.
+- Implement bulk upload for vaccination drives.
+- Add export functionality for reports in Excel and PDF formats.
 
 ## License
 This project is licensed under the MIT License.

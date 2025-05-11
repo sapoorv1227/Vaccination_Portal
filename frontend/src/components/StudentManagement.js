@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Papa from 'papaparse';
 
 function StudentManagement() {
   const [students, setStudents] = useState([]);
@@ -28,6 +29,27 @@ function StudentManagement() {
       });
   };
 
+  const handleBulkUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          axios.post('http://localhost:5000/api/students/bulk-upload', results.data)
+            .then((response) => {
+              setStudents([...students, ...response.data]);
+              alert('Bulk upload successful!');
+            })
+            .catch((error) => {
+              console.error('Error during bulk upload:', error);
+              alert('Bulk upload failed.');
+            });
+        },
+      });
+    }
+  };
+
   return (
     <div>
       <h1>Student Management</h1>
@@ -45,6 +67,9 @@ function StudentManagement() {
         onChange={(e) => setNewStudent({ ...newStudent, class: e.target.value })}
       />
       <button onClick={handleAddStudent}>Add Student</button>
+
+      <h2>Bulk Upload Students</h2>
+      <input type="file" accept=".csv" onChange={handleBulkUpload} />
 
       <h2>Student List</h2>
       <ul>

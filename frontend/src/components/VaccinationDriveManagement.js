@@ -28,6 +28,18 @@ function VaccinationDriveManagement() {
       });
   };
 
+  const handleEditDrive = (id, updatedDrive) => {
+    axios.put(`http://localhost:5000/api/vaccination-drives/${id}`, updatedDrive)
+      .then((response) => {
+        setDrives(drives.map((drive) => (drive._id === id ? response.data : drive)));
+        alert('Drive updated successfully!');
+      })
+      .catch((error) => {
+        console.error('Error updating drive:', error);
+        alert('Failed to update drive.');
+      });
+  };
+
   return (
     <div>
       <h1>Vaccination Drive Management</h1>
@@ -54,7 +66,14 @@ function VaccinationDriveManagement() {
       <h2>Vaccination Drives</h2>
       <ul>
         {drives.map((drive) => (
-          <li key={drive._id}>{drive.vaccineName} - {new Date(drive.date).toLocaleDateString()} - {drive.availableDoses} doses</li>
+          <li key={drive._id}>
+            {drive.vaccineName} - {new Date(drive.date).toLocaleDateString()} - {drive.availableDoses} doses
+            {new Date(drive.date) > new Date() && (
+              <button onClick={() => handleEditDrive(drive._id, { ...drive, availableDoses: drive.availableDoses + 10 })}>
+                Edit
+              </button>
+            )}
+          </li>
         ))}
       </ul>
     </div>
